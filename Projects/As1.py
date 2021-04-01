@@ -1,59 +1,13 @@
 import csv
-import copy
 import numpy as np
 
 csv_file_path = open('binary_data.csv')
 
 csv_reader = csv.reader(csv_file_path, delimiter=',') #
 
-#binary_data = []
-#binary_data_1 = []
 bin = np.zeros([100,6],dtype=int) # the matrix used to store the binary data
 
 N = 100
-
-'''
-def printList(input):
-    cnt = 0
-    print('[')
-
-    for row in range(0,100):
-        if cnt % 6 ==0:
-            print(input[row])
-            #print('\n')
-        else:
-            print(input[row])
-        cnt+=1
-
-    print(']')
-'''
-'''
-def printFile():
-    cnt = 1
-    while (True):
-        try:
-            print(cnt, csv_reader.__next__())
-
-        except StopIteration:
-            print('printing stopped at row {}'.format(cnt - 1))
-            break
-
-        cnt += 1
-'''
-'''
-def loadFiletoList(): #add a input para here
-    cnt = 1
-    while (True):
-        try:
-            binary_data.append(csv_reader.__next__())
-
-        except StopIteration:
-            print('loading stopped at row {}'.format(cnt - 1))
-            break
-
-        cnt += 1
-'''
-
 
 '''
 loadFiletoMat function loads the data from .csv file to the numpy matrix
@@ -78,29 +32,6 @@ def loadFiletoMat(input): #
             break
 
         cnt += 1
-
-'''
-def convert(): #add a input para here
-    global binary_data_1
-    binary_data_1 = copy.deepcopy(binary_data)
-    for i in range(0, 100):
-        for ele in range(0, 6):
-            if binary_data_1[i][ele] == str(1):
-                binary_data_1[i][ele] = 1
-            else:
-                binary_data_1[i][ele] = 0
-'''
-
-'''
-def verify(input1, input2): #add a input para here
-    #global binary_data, binary_data_1
-    for i in range(0, 100):
-        for ele in range(0, 6):
-            if input1[i][ele] != input2[i][ele]:
-                return False
-
-    return True
-'''
 
 def cnt_l(i: int, input):
     cnt_of_i = 0
@@ -136,15 +67,6 @@ def condi_dis(i: int, a: int, l: int, input):
 
 # main
 if __name__ == '__main__':
-
-    #printFile()
-    #loadFiletoList()  # load the file content into list: binary_data
-    #convert()  # convert the file from 2D list consisting of strings to !!!
-    #print(binary_data)
-    #print(binary_data_1)
-    #printList(binary_data_1)
-    #print('Are the converted data authentic? ', verify())
-
 
     loadFiletoMat(bin)
     #print(bin)
