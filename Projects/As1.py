@@ -50,13 +50,13 @@ def cnt_l(l: int, input):
     return cnt_of_l
 
 
-def common_dis(l: int):
+def prior_pro(l: int):
     """
-    common_dis() function calculates the common distribution of l
+    prior_pro() function calculates the prior probability of l
     with value: 0/1 within the binary data
 
     :param: l: value of l to be calculated
-    :return: common distribution of l = k
+    :return: prior probability of l = k
     """
     if(l==1):
         return (l1 / N) # uses prestored count of l=1 to save time
@@ -82,15 +82,15 @@ def cnt_a(i: int, a: int, l: int, input):
     return cnt_of_a
 
 
-def condi_dis(i: int, a: int, l: int, input):
+def condi_pro(i: int, a: int, l: int, input):
     """
-    condi_dis() function calculates the conditional distribution
+    condi_pro() function calculates the conditional probability
 
     :param: i: the subscript of a as the same in the task sheet
           a: the value of a(i)
           l: value of l
           input: matrix where the data will be read
-    :return: conditional distribution
+    :return: conditional probability
     """
     if(l==0):
         return ((cnt_a(i, a, l, input) / l0))
@@ -111,33 +111,33 @@ if __name__ == '__main__':
     l1 = cnt_l(1,binary_data)
 
     # print the results of the two prior probabilities
-    print('p(l={})={}'.format(0, common_dis(0)))  # output: 'p(l=0)=k' for instance
+    print('p(l={})={}'.format(0, prior_pro(0)))  # output: 'p(l=0)=k' for instance
 
-    print('p(l={})={}'.format(1, common_dis(1)))  # output: 'p(l=1)=k' for instance
+    print('p(l={})={}'.format(1, prior_pro(1)))  # output: 'p(l=1)=k' for instance
 
     print('----------------------------------')
 
     for i in range(0, 5):  # variable i the same as defined in worksheet
         # output: 'p(ai=0|l=0)=k' for instance
-        print('p(a{}={}|l={})={}'.format(i, 0, 0, condi_dis(i, 0, 0, binary_data)))
+        print('p(a{}={}|l={})={}'.format(i, 0, 0, condi_pro(i, 0, 0, binary_data)))
 
     print('----------------------------------')
 
     for i in range(0, 5):  # variable i the same as defined in worksheet
         # output: 'p(ai=1|l=0)=k' for instance
-        print('p(a{}={}|l={})={}'.format(i, 1, 0, condi_dis(i, 1, 0, binary_data)))
+        print('p(a{}={}|l={})={}'.format(i, 1, 0, condi_pro(i, 1, 0, binary_data)))
 
     print('----------------------------------')
 
     for i in range(0, 5):  # variable i the same as defined in worksheet
         # output: 'p(ai=0|l=1)=k' for instance
-        print('p(a{}={}|l={})={}'.format(i, 0, 1, condi_dis(i, 0, 1, binary_data)))
+        print('p(a{}={}|l={})={}'.format(i, 0, 1, condi_pro(i, 0, 1, binary_data)))
 
     print('----------------------------------')
 
     for i in range(0, 5):  # variable i the same as defined in worksheet
         # output: 'p(ai=1|l=1)=k' for instance
-        print('p(a{}={}|l={})={}'.format(i, 1, 1, condi_dis(i, 1, 1, binary_data)))
+        print('p(a{}={}|l={})={}'.format(i, 1, 1, condi_pro(i, 1, 1, binary_data)))
 
     print('----------------------------------')
 
