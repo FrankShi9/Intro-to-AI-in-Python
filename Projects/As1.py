@@ -8,7 +8,6 @@ csv_reader = csv.reader(csv_file_path, delimiter=',') # instantiate a csv_reader
 binary_data = np.zeros([100,6],dtype=int)  # the matrix used to store the binary data
 N = 100  # This is the same N as specified in the task sheet
 
-
 def load_file_mat(input):
     """
     loadFiletoMat() function loads the data from .csv file to the numpy matrix
@@ -102,7 +101,9 @@ def condi_pro(i: int, a: int, l: int, input):
 if __name__ == '__main__':
 
     load_file_mat(binary_data)
-    #print(bin)
+
+    print('shape of the matrix: ', np.shape(binary_data))
+    print(binary_data)
 
     print('----------------------------------')  # separator
 

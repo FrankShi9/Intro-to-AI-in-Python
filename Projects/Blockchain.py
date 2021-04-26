@@ -3,6 +3,7 @@ import json
 from time import time
 from uuid import uuid4
 from flask import Flask, jsonify, request
+from typing import Any, Dict, List, Optional
 from urllib.parse import urlparse
 import requests
 
@@ -48,7 +49,7 @@ class Blockchain(object):
         return self.last_block['index'] + 1
 
 
-    def new_block(self, proof, previous_hash=None):#last optional param
+    def new_block(self, proof, previous_hash):#last optional param
         """
         生成新块
         :param proof: <int> The proof given by the Proof of Work algorithm
@@ -185,6 +186,9 @@ node_identifier = str(uuid4()).replace('-','')
 # Instantiate the Blockchain
 blockchain = Blockchain()
 
+
+
+'''
 @app.route('/mine', methods=['GET'])
 def mine():
     return "We're gonna mine a new Block :)"
@@ -192,6 +196,7 @@ def mine():
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
     return "We'll make a new transaction :)"
+'''
 
 @app.route('/chain', methods=['GET'])
 def full_chain():
@@ -218,8 +223,9 @@ def new_transaction():
 
 @app.route('/mine', methods=['GET'])
 def mine():
+
     # We run the proof of work algorithm to get the next proof
-    last_block = blockchain.last_block()
+    last_block = blockchain.chain[-1]
     last_proof = last_block['proof']
     proof = blockchain.proof_of_work(last_proof)
 
@@ -228,11 +234,11 @@ def mine():
     blockchain.new_transaction(
         sender='0',
         recipient=node_identifier, #uuid of the miner node
-        amount = 0.1
+        amount = 1
     )
 
     # Forge the new Block by adding it to the chain
-    block = blockchain.new_block(proof)
+    block = blockchain.new_block(proof, None)
 
     response = {# a dict
         'message': "Kudos! A brand new block is forged:)",
@@ -243,9 +249,45 @@ def mine():
     }
     return jsonify(response), 200
 
+@app.route('/nodes/register', methods=['POST'])
+def register_nodes():
+    values = request.get_json()
+
+    nodes = values.get('nodes')
+    if nodes is None:
+        return "Error: Please supply a valid list of nodes", 400
+
+    for node in nodes:
+        blockchain.register_node(node)
+
+    response = {
+        'message': 'New nodes have been added',
+        'total_nodes': list(blockchain.nodes),
+    }
+    return jsonify(response), 201
+
+
+@app.route('/nodes/resolve', methods=['GET'])
+def consensus():
+    replaced = blockchain.resolve_conflicts()
+
+    if replaced:
+        response = {
+            'message': 'Our chain was replaced',
+            'new_chain': blockchain.chain
+        }
+    else:
+        response = {
+            'message': 'Our chain is authoritative',
+            'chain': blockchain.chain
+        }
+
+    return jsonify(response), 200
 
 
 if __name__ == "__main__":
+    #blockchain = Blockchain()
+    #print(blockchain.last_block())
     # change host here!!
-    app.run(host = '192.168.1.200', port=5000)
+    app.run(host = '192.168.1.106', port=5000)
 

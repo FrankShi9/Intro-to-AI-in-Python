@@ -6,7 +6,7 @@ def function_x(x):
     return y
 
 x = np.random.rand(2)
-alpha = 0.01
+alpha = 0.05
 delta = 0.000001
 
 x_list=[]

@@ -193,3 +193,4 @@ for row in r:
     for column in c:
         AK[row][column] = (aK[row][column]/sigma[row][0])
 
+np.savez('train-20ng.npz',X=AK)

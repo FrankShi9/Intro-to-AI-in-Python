@@ -5,6 +5,7 @@ result = []
 stack = []
 cnt = 0
 #print(len(stack))
+
 while(cnt==0 or len(stack)!=0):
     tmp = input.pop()
     if tmp == '^' or tmp == '(':
@@ -30,7 +31,7 @@ print(result)
 #-----------------------------------------------------------------------------------------------
 
 post = [ele for ele in 'ab*cd*-']
-value = []
+value = [3,2]
 
 while len(post) != 0:
     tmp = post[0]
